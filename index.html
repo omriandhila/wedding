@@ -14,17 +14,29 @@
 </head>
 
 <body>
-    <div id="gallery"></div>
+    <div id="gallery1" class="gallery"></div>
+    <div id="gallery2" class="gallery hidden-container"></div>
     <div class="vignette"></div>
-    <div class="main-image-container">
+    <div id="main-image-container1" class="main-image-container">
         <div class="main-image-wrapper">
         	<div class="user-details-container">
-        		<img id="user-image" src="" alt=""><span id="user-name"></span>
+        		<img id="user-image1" class="user-image" src="" alt=""><span id="user-name1" class="user-name"></span>
         	</div>
         	<div class="image-text-container">
-        		<span id="image-text"></span>
+        		<span id="image-text1" class="image-text"></span>
         	</div>
-            <img id="main-image" src="" alt="">
+            <img id="main-image1" class="main-image" src="" alt="">
+        </div>
+    </div>
+    <div id="main-image-container2" class="main-image-container hidden-container">
+        <div class="main-image-wrapper">
+        	<div class="user-details-container">
+        		<img id="user-image2" class="user-image" src="" alt=""><span id="user-name2" class="user-name"></span>
+        	</div>
+        	<div class="image-text-container">
+        		<span id="image-text2" class="image-text"></span>
+        	</div>
+            <img id="main-image2" class="main-image" src="" alt="">
         </div>
     </div>
     <script src="js/vendor/lodash.min.js"></script>

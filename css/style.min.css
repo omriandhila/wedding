@@ -3,28 +3,41 @@ body {
     font-family: 'Alef', sans-serif;
 }
 
-div#gallery {
-    width: 100%;
+div.gallery {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
-ul#images {
+ul.images {
     width: 100%;
     line-height: 0;
 }
 
-ul#images li {
+ul.images li {
     position: relative;
     width: 10%;
     display: inline-block;
     background-position: center center;
     background-size: cover;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
-ul#images li img {
+ul.images li img {
     -webkit-filter: blur(3px);
 }
 
-ul#images li .details {
+ul.images li .details {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -52,43 +65,52 @@ div.main-image-container {
     right: 0;
     text-align: center;
     padding: 10px;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+div.hidden-container {
+	opacity: 0;
 }
 
 div.main-image-wrapper {
     display: inline-block;
     position: relative;
     height: 100%;
-    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-}
-div.main-image-wrapper:before, div.main-image-wrapper:after
-{
-	content:"";
-    position:absolute; 
-    z-index:-1;
-    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
-    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
-    box-shadow:0 0 20px rgba(0,0,0,0.8);
-    top:0;
-    bottom:0;
-    left:10px;
-    right:10px;
-    -moz-border-radius:100px / 10px;
-    border-radius:100px / 10px;
-} 
-div.main-image-wrapper:after
-{
-	right:10px; 
-    left:auto;
-    -webkit-transform:skew(8deg) rotate(3deg); 
-       -moz-transform:skew(8deg) rotate(3deg);     
-        -ms-transform:skew(8deg) rotate(3deg);     
-         -o-transform:skew(8deg) rotate(3deg); 
-            transform:skew(8deg) rotate(3deg);
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
-img#main-image {
+div.main-image-wrapper:before,
+div.main-image-wrapper:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    -moz-border-radius: 100px / 10px;
+    border-radius: 100px / 10px;
+}
+
+div.main-image-wrapper:after {
+    right: 10px;
+    left: auto;
+    -webkit-transform: skew(8deg) rotate(3deg);
+    -moz-transform: skew(8deg) rotate(3deg);
+    -ms-transform: skew(8deg) rotate(3deg);
+    -o-transform: skew(8deg) rotate(3deg);
+    transform: skew(8deg) rotate(3deg);
+}
+
+img.main-image {
     height: 100%;
 }
 
@@ -98,13 +120,13 @@ div.user-details-container {
     left: 10px;
 }
 
-img#user-image {
+img.user-image {
     height: 50px;
     width: 50px;
     border: 2px solid rgba(0, 0, 0, 0.6);
 }
 
-span#user-name {
+span.user-name {
     vertical-align: middle;
     padding: 0 10px;
     display: inline-block;
@@ -127,7 +149,7 @@ div.image-text-container {
     font-size: 1.2em;
 }
 
-span#image-text {
+span.image-text {
     color: #fff;
     text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }

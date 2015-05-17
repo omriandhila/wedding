@@ -11,7 +11,8 @@ var Gallery = function(options) {
     // Set the instagram properties
     this.clientId = '1bffbc3716944f58ba95ea36818d8ef2';
     this.tag = 'surfing';
-    this.elementId = 'gallery';
+    this.container = 1;
+    this.gallery = 1;
 
     // Set the base URL
     this.baseURL = 'https://api.instagram.com/v1/tags/' + this.tag + '/media/recent?client_id=' + this.clientId + '&callback=?';
@@ -26,21 +27,37 @@ Gallery.prototype.renderGallery = function() {
     // Point to the gallery instance
     var _this = this;
 
-    // Render the gallery
-    var galleryImageList = $('<ul class="list-unstyled" id="images"></ul>');
+    // Get the old container id
+    var oldContainerId = '#gallery' + _this.gallery;
 
     // Loop through images keys
     var keys = _.keys(_this.images).sort().reverse();
 
-    // Render image element
-    var image = null;
-    keys.forEach(function(key) {
-        image = _this.images[key];
-        galleryImageList.append('<li id="' + key + '"><img class="img-responsive" src="' + image.images.standard_resolution.url + '"/></li>')
-    });
+    if (keys.length !== $(oldContainerId).find('li').length) {
 
-    // Add images to gallery
-    $('#gallery').html(galleryImageList);
+        // Render the gallery
+        var galleryImageList = $('<ul class="list-unstyled images"></ul>');
+
+        // Render image element
+        var image = null;
+        keys.forEach(function(key, index) {
+            image = _this.images[key];
+
+            galleryImageList.append('<li id="' + key + '"><img class="img-responsive" src="' + image.images.standard_resolution.url + '"/></li>')
+        });
+
+        // Toggle containers
+        _this.gallery = (_this.gallery === 1) ? 2 : 1;
+
+        // Get the new container id
+        var newContainerId = '#gallery' + _this.gallery;
+
+        // Add images to gallery
+        $(newContainerId).html(galleryImageList);
+
+        $(oldContainerId).toggleClass("hidden-container");
+        $(newContainerId).toggleClass("hidden-container");
+    }
 };
 
 /**
@@ -98,18 +115,36 @@ Gallery.prototype.setMainImage = function() {
     // Find first image
     var image = _this.images[_this.getNextMainImageId()];
 
+    // Get the old container id
+    var oldContainerId = '#main-image-container' + _this.container;
+
+    // Toggle containers
+    _this.container = (_this.container === 1) ? 2 : 1;
+
+    // Get the new container id
+    var newContainerId = '#main-image-container' + _this.container;
+
     // Set the image elements
-    $('#main-image').attr('src', image.images.standard_resolution.url);
-    $('#user-image').attr('src', image.user.profile_picture);
-    $('#user-name').html(image.user.full_name || image.user.username);
-    $('#image-text').html(image.caption.text);
+    $('#user-name' + _this.container).html(image.user.full_name || image.user.username);
+    $('#image-text' + _this.container).html(image.caption.text);
+    $('#user-image' + _this.container).attr('src', image.user.profile_picture);
+    $('#main-image' + _this.container).attr('src', image.images.standard_resolution.url);
+
+    // Toggle containers
+    $('#main-image' + _this.container).load(function() {
+        $(oldContainerId).toggleClass("hidden-container");
+        $(newContainerId).toggleClass("hidden-container");
+
+        $('#main-image' + _this.container).unbind("load");
+    });
 };
 
 /**
  * 
  */
 Gallery.prototype.updateGallery = function() {
-    // Point to the gallery instance
+    console.log(new Date(), 'gallery update')
+        // Point to the gallery instance
     var _this = this;
 
     // Update the gallery
@@ -119,7 +154,7 @@ Gallery.prototype.updateGallery = function() {
 
             // Replace image
             _this.setMainImage();
-        }, 5000);
+        }, 15000);
     }
 };
 
@@ -184,12 +219,7 @@ Gallery.prototype.loadGalleryImages = function(url) {
             // Render gallery
             _this.renderGallery();
         }
-    }).error(function() {
-        _this.offline = true;
-        console.log('here');
-    }).fail(function(jqxhr, textStatus, error) {
-        _this.offline = true;
-    }).always(function() {
+
         // Replace image
         _this.updateGallery();
     });
