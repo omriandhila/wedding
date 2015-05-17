@@ -1,0 +1,15 @@
+CACHE MANIFEST
+NETWORK:
+*
+CACHE:
+css/bootstrap.min.css
+css/bootstrap-theme.min.css
+css/style.min.css
+js/vendor/lodash.min.js
+js/vendor/moment.min.js
+js/vendor/jquery.min.js
+js/vendor/bootstrap.min.js
+js/components/gallery.js
+js/app.js
+https://scontent.cdninstagram.com/*
+https://igcdn-photos-a-a.akamaihd.net/*
