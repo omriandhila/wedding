@@ -13,6 +13,7 @@ var Gallery = function(options) {
     this.tag = 'surfing';
     this.container = 1;
     this.gallery = 1;
+    this.promoCounter = 0;
 
     // Set the base URL
     this.baseURL = 'https://api.instagram.com/v1/tags/' + this.tag + '/media/recent?client_id=' + this.clientId + '&callback=?';
@@ -108,9 +109,47 @@ Gallery.prototype.getNextMainImageId = function() {
 /**
  * 
  */
+Gallery.prototype.showPromo = function() {
+    // Point to the gallery instance
+    var _this = this;
+
+    _this.promoCounter++;
+
+    // Get the old container id
+    var oldContainerId = '#main-image-container' + _this.container;
+
+    // Toggle containers
+    _this.container = (_this.container === 1) ? 2 : 1;
+
+    // Get the new container id
+    var newContainerId = '#main-image-container' + _this.container;
+
+    // Set the image elements
+    $('#user-name' + _this.container).hide();
+    $(newContainerId + ' .image-text-container').hide();
+    $('#user-image' + _this.container).hide();
+
+    $('#main-image' + _this.container).attr('src', 'img/promo.png');
+
+    // Toggle containers
+    $('#main-image' + _this.container).load(function() {
+        $(oldContainerId).toggleClass("hidden-container");
+        $(newContainerId).toggleClass("hidden-container");
+
+        $('#main-image' + _this.container).unbind("load");
+
+        _this.promoCounter = 0;
+    });
+};
+
+/**
+ * 
+ */
 Gallery.prototype.setMainImage = function() {
     // Point to the gallery instance
     var _this = this;
+
+    _this.promoCounter++;
 
     // Find first image
     var image = _this.images[_this.getNextMainImageId()];
@@ -125,9 +164,15 @@ Gallery.prototype.setMainImage = function() {
     var newContainerId = '#main-image-container' + _this.container;
 
     // Set the image elements
+    $('#user-name' + _this.container).show();
     $('#user-name' + _this.container).html(image.user.full_name || image.user.username);
+
+    $(newContainerId + ' .image-text-container').show();
     $('#image-text' + _this.container).html(image.caption.text);
+
+    $('#user-image' + _this.container).show();
     $('#user-image' + _this.container).attr('src', image.user.profile_picture);
+
     $('#main-image' + _this.container).attr('src', image.images.standard_resolution.url);
 
     // Toggle containers
@@ -143,7 +188,6 @@ Gallery.prototype.setMainImage = function() {
  * 
  */
 Gallery.prototype.updateGallery = function() {
-    console.log(new Date(), 'gallery update')
         // Point to the gallery instance
     var _this = this;
 
@@ -153,7 +197,11 @@ Gallery.prototype.updateGallery = function() {
             _this.loadNewImages();
 
             // Replace image
-            _this.setMainImage();
+            if(_this.promoCounter < 10) {
+            	_this.setMainImage();
+            } else {
+            	_this.showPromo();
+            }
         }, 15000);
     }
 };
