@@ -10,7 +10,7 @@ var Gallery = function(options) {
 
     // Set the instagram properties
     this.clientId = '1bffbc3716944f58ba95ea36818d8ef2';
-    this.tag = 'surfing';
+    this.tag = 'omriandhila';
     this.container = 1;
     this.gallery = 1;
     this.promoCounter = 0;
