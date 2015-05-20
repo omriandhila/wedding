@@ -102,6 +102,7 @@ Gallery.prototype.getNextMainImageId = function() {
     // Set the image shown counter
     var imageId = imageToShow.id.replace('_' + imageToShow.user.id, '');
     _this.images[imageId].shown = _this.images[imageId].shown ? _this.images[imageId].shown + 1 : 1;
+    localStorage.setItem('images', JSON.stringify(_this.images));
 
     return imageId;
 };
@@ -137,6 +138,7 @@ Gallery.prototype.showPromo = function() {
         $(newContainerId).toggleClass("hidden-container");
 
         $('#main-image' + _this.container).unbind("load");
+        $('#main-image' + ((_this.container === 1) ? 2 : 1)).unbind("load");
 
         _this.promoCounter = 0;
     });
@@ -163,15 +165,22 @@ Gallery.prototype.setMainImage = function() {
     // Get the new container id
     var newContainerId = '#main-image-container' + _this.container;
 
-    // Set the image elements
-    $('#user-name' + _this.container).show();
-    $('#user-name' + _this.container).html(image.user.full_name || image.user.username);
+    if (image.local) {
+        // Set the image elements
+        $('#user-name' + _this.container).hide();
+        $(newContainerId + ' .image-text-container').hide();
+        $('#user-image' + _this.container).hide();
+    } else {
+        // Set the image elements
+        $('#user-name' + _this.container).show();
+        $('#user-name' + _this.container).html(image.user.full_name || image.user.username);
 
-    $(newContainerId + ' .image-text-container').show();
-    $('#image-text' + _this.container).html(image.caption.text);
+        $(newContainerId + ' .image-text-container').show();
+        $('#image-text' + _this.container).html(image.caption.text);
 
-    $('#user-image' + _this.container).show();
-    $('#user-image' + _this.container).attr('src', image.user.profile_picture);
+        $('#user-image' + _this.container).show();
+        $('#user-image' + _this.container).attr('src', image.user.profile_picture);
+    }
 
     $('#main-image' + _this.container).attr('src', image.images.standard_resolution.url);
 
@@ -181,6 +190,7 @@ Gallery.prototype.setMainImage = function() {
         $(newContainerId).toggleClass("hidden-container");
 
         $('#main-image' + _this.container).unbind("load");
+        $('#main-image' + ((_this.container === 1) ? 2 : 1)).unbind("load");
     });
 };
 
@@ -188,7 +198,7 @@ Gallery.prototype.setMainImage = function() {
  * 
  */
 Gallery.prototype.updateGallery = function() {
-        // Point to the gallery instance
+    // Point to the gallery instance
     var _this = this;
 
     // Update the gallery
@@ -197,12 +207,12 @@ Gallery.prototype.updateGallery = function() {
             _this.loadNewImages();
 
             // Replace image
-            if(_this.promoCounter < 10) {
-            	_this.setMainImage();
+            if (_this.promoCounter < 10) {
+                _this.setMainImage();
             } else {
-            	_this.showPromo();
+                _this.showPromo();
             }
-        }, 15000);
+        }, 5000);
     }
 };
 
@@ -251,24 +261,28 @@ Gallery.prototype.loadGalleryImages = function(url) {
     // Point to the gallery instance
     var _this = this;
 
-    // Create the API URL
     var url = (url) ? url + '&callback=?' : this.baseURL;
 
     // Get new images
-    $.getJSON(url, function(response) {
-        _this.offline = false;
-
+    $.getJSON('data/local-images.json', function(response) {
         _this.appendGalleryImages(response.data);
 
-        // Continue loading more images
-        if (response.pagination.next_url && _.keys(_this.images).length < 100) _this.loadGalleryImages(response.pagination.next_url);
-        // Or start the gallery
-        else {
-            // Render gallery
-            _this.renderGallery();
-        }
+        // Get new images
+        $.getJSON(url, function(response) {
+            _this.offline = false;
 
-        // Replace image
-        _this.updateGallery();
+            _this.appendGalleryImages(response.data);
+
+            // Continue loading more images
+            if (response.pagination.next_url && _.keys(_this.images).length < 100) _this.loadGalleryImages(response.pagination.next_url);
+            // Or start the gallery
+            else {
+                // Render gallery
+                _this.renderGallery();
+
+                // Replace image
+                _this.updateGallery();
+            }
+        });
     });
 };

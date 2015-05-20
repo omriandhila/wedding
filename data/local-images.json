@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "id": "local1",
+            "user": {
+                "id": ""
+            },
+            "local": true,
+            "shown": -1,
+            "images": {
+                "standard_resolution": {
+                    "url": "img/local/local1.jpg"
+                }
+            }
+        },
+        {
+            "id": "local2",
+            "user": {
+                "id": ""
+            },
+            "local": true,
+            "shown": -1,
+            "images": {
+                "standard_resolution": {
+                    "url": "img/local/local2.jpg"
+                }
+            }
+        }
+    ]
+}
