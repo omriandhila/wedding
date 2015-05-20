@@ -1,30 +1,3 @@
 {
-    "data": [
-        {
-            "id": "local1",
-            "user": {
-                "id": ""
-            },
-            "local": true,
-            "shown": -1,
-            "images": {
-                "standard_resolution": {
-                    "url": "https://dl-web.dropbox.com/get/omriandhila/MOR_0055.JPG?_subject_uid=20988329&w=AACEKq3aPD70itRXQBY2AJuNm0cTGrJwOF5Pv9vMy_wLvw"
-                }
-            }
-        },
-        {
-            "id": "local2",
-            "user": {
-                "id": ""
-            },
-            "local": true,
-            "shown": -1,
-            "images": {
-                "standard_resolution": {
-                    "url": "https://dl-web.dropbox.com/get/omriandhila/MOR_0055.JPG?_subject_uid=20988329&w=AACEKq3aPD70itRXQBY2AJuNm0cTGrJwOF5Pv9vMy_wLvw"
-                }
-            }
-        }
-    ]
+    "data": []
 }
