@@ -9,7 +9,7 @@
             "shown": -1,
             "images": {
                 "standard_resolution": {
-                    "url": "img/local/local1.jpg"
+                    "url": "file:///C:/omriandhila/MOR_0029.JPG"
                 }
             }
         },
@@ -22,7 +22,7 @@
             "shown": -1,
             "images": {
                 "standard_resolution": {
-                    "url": "img/local/local2.jpg"
+                    "url": "file:///C:/omriandhila/MOR_0055.JPG"
                 }
             }
         }
